@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -18,6 +20,14 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+
+        val properties = Properties().apply {
+            rootProject.file("local.properties").reader().use(::load)
+        }
+        val apiKey = properties["API_KEY"] as String
+
+        buildConfigField("String", "API_KEY", apiKey)
     }
 
     buildTypes {

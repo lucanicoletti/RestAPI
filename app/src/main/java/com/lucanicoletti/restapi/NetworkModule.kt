@@ -21,7 +21,7 @@ object NetworkModule {
                 .build()
 
             retrofitInstance = Retrofit.Builder()
-                .baseUrl("https://cat-fact.herokuapp.com")
+                .baseUrl("https://randommer.io")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
