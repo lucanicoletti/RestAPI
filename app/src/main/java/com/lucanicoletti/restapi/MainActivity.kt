@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.lucanicoletti.restapi.data.HumanizeRequestBody
 import com.lucanicoletti.restapi.ui.theme.RestAPITheme
 import kotlinx.coroutines.launch
 
@@ -47,6 +48,9 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(false)
             }
             var generatedPw by remember {
+                mutableStateOf("")
+            }
+            var humanized by remember {
                 mutableStateOf("")
             }
 
@@ -166,6 +170,43 @@ class MainActivity : ComponentActivity() {
                             } else {
                                 OutlinedTextField(
                                     value = generatedPw,
+                                    onValueChange = {},
+                                    enabled = false
+                                )
+                            }
+                        }
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Button(onClick = {
+                                coroutineScope.launch {
+                                    loading = true
+                                    try {
+                                        val requestBody = HumanizeRequestBody(generatedPw)
+                                        val humanizedPw = service.humanizeText(requestBody)
+                                        humanized = humanizedPw
+                                    } catch (e: Exception) {
+                                        Log.e("ERR", e.localizedMessage, e)
+                                    } finally {
+                                        loading = false
+                                    }
+                                }
+                            }) {
+                                Text("Humanize")
+                            }
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            if (loading) {
+                                CircularProgressIndicator()
+                            } else {
+                                OutlinedTextField(
+                                    value = humanized,
                                     onValueChange = {},
                                     enabled = false
                                 )
