@@ -19,7 +19,7 @@ interface ApiService {
         @Query("length") length: Int,
         @Query("hasDigits") hasDigits: Boolean,
         @Query("hasUpperCase") hasUpperCase: Boolean,
-        @Query("hasSpecials") hasSpecials: Boolean,
+        @Query("hasSpecial") hasSpecials: Boolean,
     ): String
 
     @POST("/api/Text/Humanize")

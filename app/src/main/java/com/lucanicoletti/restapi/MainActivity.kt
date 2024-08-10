@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                             mutableStateOf(false)
                         }
                         var pwLength by rememberSaveable {
-                            mutableStateOf("")
+                            mutableStateOf("10")
                         }
                         var useNumbers by rememberSaveable {
                             mutableStateOf(false)

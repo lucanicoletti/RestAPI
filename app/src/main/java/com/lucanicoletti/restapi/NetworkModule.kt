@@ -1,6 +1,7 @@
 package com.lucanicoletti.restapi
 
 import com.lucanicoletti.restapi.data.ApiService
+import com.lucanicoletti.restapi.data.HeaderAuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,6 +19,7 @@ object NetworkModule {
         if (!::retrofitInstance.isInitialized) {
             val client = OkHttpClient.Builder()
                 .addNetworkInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(HeaderAuthInterceptor())
                 .build()
 
             retrofitInstance = Retrofit.Builder()
